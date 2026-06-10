@@ -107,7 +107,7 @@ function DestinationDetail() {
         <p className="eyebrow text-muted-foreground">A Suggested Itinerary</p>
         <h2 className="mt-3 font-display text-4xl md:text-5xl">3 days, considered.</h2>
         <ol className="mt-12 space-y-px overflow-hidden rounded-2xl bg-border">
-          {d.itinerary.map((it) => (
+          {d.itinerary.map((it: Destination["itinerary"][number]) => (
             <li key={it.day} className="grid grid-cols-[80px_1fr] gap-8 bg-background p-8 md:grid-cols-[120px_200px_1fr] md:p-10">
               <div className="font-display text-4xl text-sandstone-deep md:text-5xl">
                 0{it.day}
