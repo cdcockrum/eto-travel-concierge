@@ -3,7 +3,7 @@ import { ArrowLeft, Calendar, CloudSun, MapPin } from "lucide-react";
 import { getDestination, destinations, type Destination } from "@/lib/destinations";
 
 export const Route = createFileRoute("/destinations/$slug")({
-  loader: ({ params }) => {
+  loader: ({ params }): Destination => {
     const dest = getDestination(params.slug);
     if (!dest) throw notFound();
     return dest;
