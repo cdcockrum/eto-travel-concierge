@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Calendar, CloudSun, MapPin } from "lucide-react";
-import { getDestination, destinations } from "@/lib/destinations";
+import { getDestination, destinations, type Destination } from "@/lib/destinations";
 
 export const Route = createFileRoute("/destinations/$slug")({
   loader: ({ params }) => {
