@@ -9,38 +9,214 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SustainableRouteImport } from './routes/sustainable'
+import { Route as PlannerRouteImport } from './routes/planner'
+import { Route as PhotographyRouteImport } from './routes/photography'
+import { Route as ItineraryRouteImport } from './routes/itinerary'
+import { Route as InspirationRouteImport } from './routes/inspiration'
+import { Route as DestinationsRouteImport } from './routes/destinations'
+import { Route as CultureRouteImport } from './routes/culture'
+import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DestinationsSlugRouteImport } from './routes/destinations.$slug'
 
+const SustainableRoute = SustainableRouteImport.update({
+  id: '/sustainable',
+  path: '/sustainable',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlannerRoute = PlannerRouteImport.update({
+  id: '/planner',
+  path: '/planner',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhotographyRoute = PhotographyRouteImport.update({
+  id: '/photography',
+  path: '/photography',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ItineraryRoute = ItineraryRouteImport.update({
+  id: '/itinerary',
+  path: '/itinerary',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InspirationRoute = InspirationRouteImport.update({
+  id: '/inspiration',
+  path: '/inspiration',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DestinationsRoute = DestinationsRouteImport.update({
+  id: '/destinations',
+  path: '/destinations',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CultureRoute = CultureRouteImport.update({
+  id: '/culture',
+  path: '/culture',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DestinationsSlugRoute = DestinationsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => DestinationsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/culture': typeof CultureRoute
+  '/destinations': typeof DestinationsRouteWithChildren
+  '/inspiration': typeof InspirationRoute
+  '/itinerary': typeof ItineraryRoute
+  '/photography': typeof PhotographyRoute
+  '/planner': typeof PlannerRoute
+  '/sustainable': typeof SustainableRoute
+  '/destinations/$slug': typeof DestinationsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/culture': typeof CultureRoute
+  '/destinations': typeof DestinationsRouteWithChildren
+  '/inspiration': typeof InspirationRoute
+  '/itinerary': typeof ItineraryRoute
+  '/photography': typeof PhotographyRoute
+  '/planner': typeof PlannerRoute
+  '/sustainable': typeof SustainableRoute
+  '/destinations/$slug': typeof DestinationsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/culture': typeof CultureRoute
+  '/destinations': typeof DestinationsRouteWithChildren
+  '/inspiration': typeof InspirationRoute
+  '/itinerary': typeof ItineraryRoute
+  '/photography': typeof PhotographyRoute
+  '/planner': typeof PlannerRoute
+  '/sustainable': typeof SustainableRoute
+  '/destinations/$slug': typeof DestinationsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/culture'
+    | '/destinations'
+    | '/inspiration'
+    | '/itinerary'
+    | '/photography'
+    | '/planner'
+    | '/sustainable'
+    | '/destinations/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/about'
+    | '/culture'
+    | '/destinations'
+    | '/inspiration'
+    | '/itinerary'
+    | '/photography'
+    | '/planner'
+    | '/sustainable'
+    | '/destinations/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/culture'
+    | '/destinations'
+    | '/inspiration'
+    | '/itinerary'
+    | '/photography'
+    | '/planner'
+    | '/sustainable'
+    | '/destinations/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CultureRoute: typeof CultureRoute
+  DestinationsRoute: typeof DestinationsRouteWithChildren
+  InspirationRoute: typeof InspirationRoute
+  ItineraryRoute: typeof ItineraryRoute
+  PhotographyRoute: typeof PhotographyRoute
+  PlannerRoute: typeof PlannerRoute
+  SustainableRoute: typeof SustainableRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sustainable': {
+      id: '/sustainable'
+      path: '/sustainable'
+      fullPath: '/sustainable'
+      preLoaderRoute: typeof SustainableRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/planner': {
+      id: '/planner'
+      path: '/planner'
+      fullPath: '/planner'
+      preLoaderRoute: typeof PlannerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/photography': {
+      id: '/photography'
+      path: '/photography'
+      fullPath: '/photography'
+      preLoaderRoute: typeof PhotographyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/itinerary': {
+      id: '/itinerary'
+      path: '/itinerary'
+      fullPath: '/itinerary'
+      preLoaderRoute: typeof ItineraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inspiration': {
+      id: '/inspiration'
+      path: '/inspiration'
+      fullPath: '/inspiration'
+      preLoaderRoute: typeof InspirationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/destinations': {
+      id: '/destinations'
+      path: '/destinations'
+      fullPath: '/destinations'
+      preLoaderRoute: typeof DestinationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/culture': {
+      id: '/culture'
+      path: '/culture'
+      fullPath: '/culture'
+      preLoaderRoute: typeof CultureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +224,38 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/destinations/$slug': {
+      id: '/destinations/$slug'
+      path: '/$slug'
+      fullPath: '/destinations/$slug'
+      preLoaderRoute: typeof DestinationsSlugRouteImport
+      parentRoute: typeof DestinationsRoute
+    }
   }
 }
 
+interface DestinationsRouteChildren {
+  DestinationsSlugRoute: typeof DestinationsSlugRoute
+}
+
+const DestinationsRouteChildren: DestinationsRouteChildren = {
+  DestinationsSlugRoute: DestinationsSlugRoute,
+}
+
+const DestinationsRouteWithChildren = DestinationsRoute._addFileChildren(
+  DestinationsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  CultureRoute: CultureRoute,
+  DestinationsRoute: DestinationsRouteWithChildren,
+  InspirationRoute: InspirationRoute,
+  ItineraryRoute: ItineraryRoute,
+  PhotographyRoute: PhotographyRoute,
+  PlannerRoute: PlannerRoute,
+  SustainableRoute: SustainableRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
