@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WorkWithChristopherRouteImport } from './routes/work-with-christopher'
 import { Route as SustainableRouteImport } from './routes/sustainable'
 import { Route as PlannerRouteImport } from './routes/planner'
 import { Route as PhotographyRouteImport } from './routes/photography'
@@ -20,6 +21,11 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DestinationsSlugRouteImport } from './routes/destinations.$slug'
 
+const WorkWithChristopherRoute = WorkWithChristopherRouteImport.update({
+  id: '/work-with-christopher',
+  path: '/work-with-christopher',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SustainableRoute = SustainableRouteImport.update({
   id: '/sustainable',
   path: '/sustainable',
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/photography': typeof PhotographyRoute
   '/planner': typeof PlannerRoute
   '/sustainable': typeof SustainableRoute
+  '/work-with-christopher': typeof WorkWithChristopherRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
 }
 export interface FileRoutesByTo {
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/photography': typeof PhotographyRoute
   '/planner': typeof PlannerRoute
   '/sustainable': typeof SustainableRoute
+  '/work-with-christopher': typeof WorkWithChristopherRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
 }
 export interface FileRoutesById {
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/photography': typeof PhotographyRoute
   '/planner': typeof PlannerRoute
   '/sustainable': typeof SustainableRoute
+  '/work-with-christopher': typeof WorkWithChristopherRoute
   '/destinations/$slug': typeof DestinationsSlugRoute
 }
 export interface FileRouteTypes {
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/photography'
     | '/planner'
     | '/sustainable'
+    | '/work-with-christopher'
     | '/destinations/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/photography'
     | '/planner'
     | '/sustainable'
+    | '/work-with-christopher'
     | '/destinations/$slug'
   id:
     | '__root__'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/photography'
     | '/planner'
     | '/sustainable'
+    | '/work-with-christopher'
     | '/destinations/$slug'
   fileRoutesById: FileRoutesById
 }
@@ -157,10 +169,18 @@ export interface RootRouteChildren {
   PhotographyRoute: typeof PhotographyRoute
   PlannerRoute: typeof PlannerRoute
   SustainableRoute: typeof SustainableRoute
+  WorkWithChristopherRoute: typeof WorkWithChristopherRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/work-with-christopher': {
+      id: '/work-with-christopher'
+      path: '/work-with-christopher'
+      fullPath: '/work-with-christopher'
+      preLoaderRoute: typeof WorkWithChristopherRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sustainable': {
       id: '/sustainable'
       path: '/sustainable'
@@ -256,17 +276,8 @@ const rootRouteChildren: RootRouteChildren = {
   PhotographyRoute: PhotographyRoute,
   PlannerRoute: PlannerRoute,
   SustainableRoute: SustainableRoute,
+  WorkWithChristopherRoute: WorkWithChristopherRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

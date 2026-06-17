@@ -34,7 +34,7 @@ export const Route = createFileRoute("/destinations/$slug")({
 const TIER_ORDER: Hotel["tier"][] = ["Budget", "Mid-Range", "Boutique", "Luxury"];
 
 function DestinationDetail() {
-  const d = Route.useLoaderData();
+  const d = Route.useLoaderData() as Destination;
   const related = destinations.filter((x) => x.slug !== d.slug).slice(0, 3);
 
   return (
