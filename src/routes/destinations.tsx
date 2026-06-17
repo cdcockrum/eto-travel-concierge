@@ -47,6 +47,10 @@ function DestinationsIndex() {
           A curated catalogue of places we know intimately — researched, photographed, and
           shaped into itineraries you'll actually use.
         </p>
+        <p className="mt-4 text-xs italic text-muted-foreground">
+          Sample recommendations for demonstration purposes. Final travel plans should be
+          customized and verified before booking.
+        </p>
       </header>
 
       <div className="mt-12 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
