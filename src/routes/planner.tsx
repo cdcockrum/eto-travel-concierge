@@ -1,8 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import {
-  Sparkles, MapPin, Calendar, DollarSign, Heart, Loader2, Hotel, Utensils, Plane,
-  Camera, Accessibility, Gauge, Coffee, Quote,
+  Sparkles,
+  MapPin,
+  Calendar,
+  DollarSign,
+  Heart,
+  Loader2,
+  Hotel,
+  Utensils,
+  Plane,
+  Camera,
+  Accessibility,
+  Gauge,
+  Coffee,
+  Quote,
 } from "lucide-react";
 import { SampleDisclaimer } from "@/components/sample-disclaimer";
 
@@ -10,18 +22,51 @@ export const Route = createFileRoute("/planner")({
   head: () => ({
     meta: [
       { title: "AI Travel Planner — Éto Travel Concierge" },
-      { name: "description", content: "A conversational AI that drafts personalized itineraries, then a human advisor refines them with you." },
+      {
+        name: "description",
+        content:
+          "A conversational AI that drafts personalized itineraries, then a human advisor refines them with you.",
+      },
     ],
   }),
   component: Planner,
 });
 
-const INTERESTS = ["Photography", "Wildlife", "Food & Wine", "Culture", "Adventure", "Architecture", "Wellness", "Local Markets"];
+const INTERESTS = [
+  "Photography",
+  "Wildlife",
+  "Food & Wine",
+  "Culture",
+  "Adventure",
+  "Architecture",
+  "Wellness",
+  "Local Markets",
+];
+
 const STYLES = ["Backpacker", "Comfortable", "Boutique", "Luxury", "Ultra-Luxury"];
 const PACES = ["Slow & immersive", "Balanced", "Action-packed"];
-const HOTEL_PREFS = ["Hostel / Guesthouse", "Boutique hotel", "Design-forward", "Luxury resort", "Eco-lodge"];
-const FOOD_PREFS = ["Omnivore", "Vegetarian", "Vegan", "Pescatarian", "Gluten-free", "Halal", "Kosher"];
-const MOBILITY = ["No restrictions", "Limited walking", "Wheelchair accessible required", "Avoid stairs"];
+const HOTEL_PREFS = [
+  "Hostel / Guesthouse",
+  "Boutique hotel",
+  "Design-forward",
+  "Luxury resort",
+  "Eco-lodge",
+];
+const FOOD_PREFS = [
+  "Omnivore",
+  "Vegetarian",
+  "Vegan",
+  "Pescatarian",
+  "Gluten-free",
+  "Halal",
+  "Kosher",
+];
+const MOBILITY = [
+  "No restrictions",
+  "Limited walking",
+  "Wheelchair accessible required",
+  "Avoid stairs",
+];
 const PHOTO_WILD = ["Photography priority", "Wildlife priority", "Both", "Neither"];
 
 type DayPlan = {
@@ -33,7 +78,7 @@ type DayPlan = {
   lodging: string;
   dining: string;
   transport: string;
-  costLevel: "$" | "$$" | "$$$" | "$$$$";
+  costLevel: "$" | "$$" | "$$$" | "$$$$" | string;
   advisorNote: string;
 };
 
@@ -47,18 +92,6 @@ type Plan = {
   transport: string[];
 };
 
-function costFor(style: string): DayPlan["costLevel"] {
-  switch (style) {
-    case "Backpacker":
-      return "$";
-    case "Comfortable":
-      return "$$";
-    case "Boutique":
-      return "$$$";
-    default:
-      return "$$$$";
-  }
-}
 function Planner() {
   const [destination, setDestination] = useState("Kyoto, Japan");
   const [dates, setDates] = useState("Early November, 8 nights");
@@ -70,54 +103,65 @@ function Planner() {
   const [foodPref, setFoodPref] = useState("Omnivore");
   const [mobility, setMobility] = useState("No restrictions");
   const [photoWild, setPhotoWild] = useState("Photography priority");
+
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState<Plan | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const toggle = (i: string) =>
-    setInterests((arr) => (arr.includes(i) ? arr.filter((x) => x !== i) : [...arr, i]));
+  const toggle = (interest: string) => {
+    setInterests((current) =>
+      current.includes(interest)
+        ? current.filter((item) => item !== interest)
+        : [...current, interest]
+    );
+  };
 
-const submit = async (e: React.FormEvent) => {
-  e.preventDefault();
+  const submit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  setLoading(true);
-  setPlan(null);
-  setError(null);
+    setLoading(true);
+    setPlan(null);
+    setError(null);
 
-  try {
-    const response = await fetch("/api/travel", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        destination,
-        dates,
-        budget,
-        style,
-        interests,
-        pace,
-        hotelPref,
-        foodPref,
-        mobility,
-        photoWild,
-      }),
-    });
+    try {
+      const response = await fetch("/api/travel", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          destination,
+          dates,
+          budget,
+          style,
+          interests,
+          pace,
+          hotelPref,
+          foodPref,
+          mobility,
+          photoWild,
+        }),
+      });
 
-    const text = await response.text();
+      const text = await response.text();
 
-    if (!response.ok) {
-      throw new Error(`API error ${response.status}: ${text}`);
+      if (!response.ok) {
+        throw new Error(`API error ${response.status}: ${text}`);
+      }
+
+      const guide = JSON.parse(text) as Plan;
+      setPlan(guide);
+    } catch (err) {
+      console.error("Travel planning error:", err);
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Something went wrong while generating your itinerary."
+      );
+    } finally {
+      setLoading(false);
     }
-
-    const guide = JSON.parse(text);
-    setPlan(guide);
-  } catch (error) {
-    console.error("Travel planning error:", error);
-    setError(error instanceof Error ? error.message : "Something went wrong.");
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <div className="container-editorial py-16 md:py-24">
@@ -133,32 +177,54 @@ const submit = async (e: React.FormEvent) => {
       </header>
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[1fr_1.4fr]">
-        {/* FORM */}
         <form
           onSubmit={submit}
           className="h-fit space-y-6 rounded-2xl border border-border bg-card p-6 md:p-8 lg:sticky lg:top-28"
         >
           <Field label="Destination" icon={MapPin}>
-            <input value={destination} onChange={(e) => setDestination(e.target.value)} required placeholder="Kyoto, Iceland's Westfjords, the Amalfi coast…" className={inputCls} />
+            <input
+              value={destination}
+              onChange={(e) => setDestination(e.target.value)}
+              required
+              placeholder="Kyoto, Iceland's Westfjords, the Amalfi coast…"
+              className={inputCls}
+            />
           </Field>
+
           <Field label="Travel dates" icon={Calendar}>
-            <input value={dates} onChange={(e) => setDates(e.target.value)} placeholder="e.g. Late March, 8 nights" className={inputCls} />
+            <input
+              value={dates}
+              onChange={(e) => setDates(e.target.value)}
+              placeholder="e.g. Late March, 8 nights"
+              className={inputCls}
+            />
           </Field>
+
           <Field label="Budget" icon={DollarSign}>
-            <input value={budget} onChange={(e) => setBudget(e.target.value)} placeholder="$5,000 – $15,000 per person" className={inputCls} />
+            <input
+              value={budget}
+              onChange={(e) => setBudget(e.target.value)}
+              placeholder="$5,000 – $15,000 per person"
+              className={inputCls}
+            />
           </Field>
 
           <Field label="Travel style" icon={Sparkles}>
-            <Pills options={[...STYLES]} value={style} onChange={setStyle} />
+            <Pills options={STYLES} value={style} onChange={setStyle} />
           </Field>
 
           <Field label="Interests" icon={Heart}>
             <div className="flex flex-wrap gap-1.5">
-              {INTERESTS.map((i) => {
-                const on = interests.includes(i);
+              {INTERESTS.map((interest) => {
+                const selected = interests.includes(interest);
                 return (
-                  <button type="button" key={i} onClick={() => toggle(i)} className={pillCls(on)}>
-                    {i}
+                  <button
+                    type="button"
+                    key={interest}
+                    onClick={() => toggle(interest)}
+                    className={pillCls(selected)}
+                  >
+                    {interest}
                   </button>
                 );
               })}
@@ -166,23 +232,23 @@ const submit = async (e: React.FormEvent) => {
           </Field>
 
           <Field label="Pace" icon={Gauge}>
-            <Pills options={[...PACES]} value={pace} onChange={setPace} />
+            <Pills options={PACES} value={pace} onChange={setPace} />
           </Field>
 
           <Field label="Hotel preference" icon={Hotel}>
-            <Pills options={[...HOTEL_PREFS]} value={hotelPref} onChange={setHotelPref} />
+            <Pills options={HOTEL_PREFS} value={hotelPref} onChange={setHotelPref} />
           </Field>
 
           <Field label="Food preferences" icon={Coffee}>
-            <Pills options={[...FOOD_PREFS]} value={foodPref} onChange={setFoodPref} />
+            <Pills options={FOOD_PREFS} value={foodPref} onChange={setFoodPref} />
           </Field>
 
           <Field label="Mobility needs" icon={Accessibility}>
-            <Pills options={[...MOBILITY]} value={mobility} onChange={setMobility} />
+            <Pills options={MOBILITY} value={mobility} onChange={setMobility} />
           </Field>
 
           <Field label="Photography or wildlife" icon={Camera}>
-            <Pills options={[...PHOTO_WILD]} value={photoWild} onChange={setPhotoWild} />
+            <Pills options={PHOTO_WILD} value={photoWild} onChange={setPhotoWild} />
           </Field>
 
           <button
@@ -196,17 +262,23 @@ const submit = async (e: React.FormEvent) => {
               </>
             ) : (
               <>
-                <Sparkles className="h-4 w-4" /> Generate sample itinerary
+                <Sparkles className="h-4 w-4" /> Generate AI itinerary
               </>
             )}
           </button>
+
           <SampleDisclaimer />
         </form>
 
-        {/* OUTPUT */}
-        <div className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">
-          {error}
+        <div className="min-h-[400px]">
+          {error && (
+            <div className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">
+              {error}
+            </div>
+          )}
+
           {!plan && !loading && <EmptyState />}
+
           {loading && (
             <div className="grid h-full place-items-center rounded-2xl border border-dashed border-border bg-secondary/30 p-12 text-center">
               <div>
@@ -217,6 +289,7 @@ const submit = async (e: React.FormEvent) => {
               </div>
             </div>
           )}
+
           {plan && <PlanView plan={plan} />}
         </div>
       </div>
@@ -227,27 +300,48 @@ const submit = async (e: React.FormEvent) => {
 const inputCls =
   "h-11 w-full rounded-md border border-input bg-background px-3 text-sm focus:border-foreground focus:outline-none";
 
-function pillCls(on: boolean) {
+function pillCls(selected: boolean) {
   return `rounded-full border px-3 py-1.5 text-xs transition ${
-    on
+    selected
       ? "border-foreground bg-foreground text-background"
       : "border-border text-muted-foreground hover:border-foreground hover:text-foreground"
   }`;
 }
 
-function Pills({ options, value, onChange }: { options: string[]; value: string; onChange: (v: string) => void }) {
+function Pills({
+  options,
+  value,
+  onChange,
+}: {
+  options: string[];
+  value: string;
+  onChange: (value: string) => void;
+}) {
   return (
     <div className="flex flex-wrap gap-1.5">
-      {options.map((o) => (
-        <button type="button" key={o} onClick={() => onChange(o)} className={pillCls(value === o)}>
-          {o}
+      {options.map((option) => (
+        <button
+          type="button"
+          key={option}
+          onClick={() => onChange(option)}
+          className={pillCls(value === option)}
+        >
+          {option}
         </button>
       ))}
     </div>
   );
 }
 
-function Field({ label, icon: Icon, children }: { label: string; icon: typeof MapPin; children: React.ReactNode }) {
+function Field({
+  label,
+  icon: Icon,
+  children,
+}: {
+  label: string;
+  icon: typeof MapPin;
+  children: React.ReactNode;
+}) {
   return (
     <label className="block">
       <span className="mb-2 flex items-center gap-2 text-xs font-medium text-foreground">
@@ -264,9 +358,9 @@ function EmptyState() {
     <div className="grid h-full place-items-center rounded-2xl border border-dashed border-border bg-secondary/30 p-12 text-center">
       <div className="max-w-sm">
         <Sparkles className="mx-auto h-6 w-6 text-forest" />
-        <p className="mt-4 font-display text-2xl">Your sample itinerary will appear here.</p>
+        <p className="mt-4 font-display text-2xl">Your AI itinerary will appear here.</p>
         <p className="mt-2 text-sm text-muted-foreground">
-          Fill out the form and our concierge AI will draft a personalized plan in seconds.
+          Fill out the form and the concierge AI will draft a destination-specific plan.
         </p>
       </div>
     </div>
@@ -279,7 +373,9 @@ function PlanView({ plan }: { plan: Plan }) {
       <div>
         <p className="eyebrow text-muted-foreground">Your draft itinerary</p>
         <h2 className="mt-3 font-display text-3xl md:text-4xl">A trip, drafted.</h2>
-        <p className="mt-4 text-base leading-relaxed text-foreground/80">{plan.summary}</p>
+        <p className="mt-4 text-base leading-relaxed text-foreground/80">
+          {plan.summary}
+        </p>
       </div>
 
       <SampleDisclaimer />
@@ -289,7 +385,9 @@ function PlanView({ plan }: { plan: Plan }) {
           <Quote className="h-4 w-4 text-forest" strokeWidth={1.5} />
           <p className="eyebrow text-forest-deep">Why I recommend this</p>
         </div>
-        <p className="mt-3 text-base leading-relaxed text-foreground/85">{plan.whyRecommend}</p>
+        <p className="mt-3 text-base leading-relaxed text-foreground/85">
+          {plan.whyRecommend}
+        </p>
         <p className="mt-4 text-xs uppercase tracking-[0.18em] text-muted-foreground">
           — Christopher, lead advisor
         </p>
@@ -298,26 +396,33 @@ function PlanView({ plan }: { plan: Plan }) {
       <div>
         <p className="eyebrow mb-4 text-muted-foreground">The Days</p>
         <ol className="space-y-px overflow-hidden rounded-xl bg-border">
-          {plan.itinerary.map((d) => (
-            <li key={d.day} className="grid grid-cols-1 gap-5 bg-card p-6 md:grid-cols-[60px_1fr]">
+          {plan.itinerary?.map((day) => (
+            <li
+              key={day.day}
+              className="grid grid-cols-1 gap-5 bg-card p-6 md:grid-cols-[60px_1fr]"
+            >
               <div className="flex items-start justify-between md:block">
-                <span className="font-display text-2xl text-sandstone-deep">0{d.day}</span>
+                <span className="font-display text-2xl text-sandstone-deep">
+                  {String(day.day).padStart(2, "0")}
+                </span>
                 <span className="rounded-full bg-secondary px-2 py-0.5 font-mono text-[0.65rem] tracking-wider text-muted-foreground md:mt-3 md:inline-block">
-                  {d.costLevel}
+                  {day.costLevel}
                 </span>
               </div>
+
               <div>
-                <h4 className="font-display text-lg">{d.title}</h4>
+                <h4 className="font-display text-lg">{day.title}</h4>
                 <div className="mt-3 space-y-2 text-sm text-foreground/80">
-                  <DayRow label="Morning" value={d.morning} />
-                  <DayRow label="Afternoon" value={d.afternoon} />
-                  <DayRow label="Evening" value={d.evening} />
-                  <DayRow label="Lodging" value={d.lodging} />
-                  <DayRow label="Dining" value={d.dining} />
-                  <DayRow label="Transport" value={d.transport} />
+                  <DayRow label="Morning" value={day.morning} />
+                  <DayRow label="Afternoon" value={day.afternoon} />
+                  <DayRow label="Evening" value={day.evening} />
+                  <DayRow label="Lodging" value={day.lodging} />
+                  <DayRow label="Dining" value={day.dining} />
+                  <DayRow label="Transport" value={day.transport} />
                 </div>
+
                 <p className="mt-4 rounded-lg bg-secondary/50 px-3 py-2 text-xs italic text-foreground/75">
-                  Advisor note — {d.advisorNote}
+                  Advisor note — {day.advisorNote}
                 </p>
               </div>
             </li>
@@ -326,10 +431,10 @@ function PlanView({ plan }: { plan: Plan }) {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card icon={Hotel} title="Recommended Hotels" items={plan.hotels} />
-        <Card icon={Sparkles} title="Activities" items={plan.activities} />
-        <Card icon={Utensils} title="Restaurants" items={plan.restaurants} />
-        <Card icon={Plane} title="Transportation" items={plan.transport} />
+        <Card icon={Hotel} title="Recommended Hotels" items={plan.hotels || []} />
+        <Card icon={Sparkles} title="Activities" items={plan.activities || []} />
+        <Card icon={Utensils} title="Restaurants" items={plan.restaurants || []} />
+        <Card icon={Plane} title="Transportation" items={plan.transport || []} />
       </div>
 
       <div className="flex flex-wrap gap-3 border-t border-border pt-6">
@@ -350,23 +455,35 @@ function PlanView({ plan }: { plan: Plan }) {
 function DayRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="grid grid-cols-[90px_1fr] gap-3">
-      <span className="text-xs uppercase tracking-[0.15em] text-muted-foreground">{label}</span>
+      <span className="text-xs uppercase tracking-[0.15em] text-muted-foreground">
+        {label}
+      </span>
       <span>{value}</span>
     </div>
   );
 }
 
-function Card({ icon: Icon, title, items }: { icon: typeof MapPin; title: string; items: string[] }) {
+function Card({
+  icon: Icon,
+  title,
+  items,
+}: {
+  icon: typeof MapPin;
+  title: string;
+  items: string[];
+}) {
   return (
     <div className="rounded-xl border border-border bg-background p-5">
       <div className="flex items-center gap-2">
         <Icon className="h-4 w-4 text-forest" strokeWidth={1.5} />
         <h4 className="font-display text-lg">{title}</h4>
       </div>
+
       <ul className="mt-3 space-y-2">
-        {items.map((it) => (
-          <li key={it} className="flex gap-2 text-sm text-foreground/80">
-            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-forest" /> {it}
+        {items.map((item) => (
+          <li key={item} className="flex gap-2 text-sm text-foreground/80">
+            <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-forest" />
+            {item}
           </li>
         ))}
       </ul>
