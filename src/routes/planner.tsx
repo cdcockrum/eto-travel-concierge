@@ -76,15 +76,45 @@ function Planner() {
   const toggle = (i: string) =>
     setInterests((arr) => (arr.includes(i) ? arr.filter((x) => x !== i) : [...arr, i]));
 
-  const submit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setPlan(null);
-    setTimeout(() => {
-      setPlan(buildPlan({ destination, dates, budget, style, interests, pace, hotelPref, foodPref, mobility, photoWild }));
-      setLoading(false);
-    }, 1400);
-  };
+ const submit = async (e: React.FormEvent) => {
+  e.preventDefault();
+
+  setLoading(true);
+  setPlan(null);
+
+  try {
+    const response = await fetch("/api/travel", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        destination,
+        dates,
+        budget,
+        style,
+        interests,
+        pace,
+        hotelPref,
+        foodPref,
+        mobility,
+        photoWild,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to generate travel guide");
+    }
+
+    const guide = await response.json();
+
+    setPlan(guide);
+  } catch (error) {
+    console.error("Travel planning error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="container-editorial py-16 md:py-24">
