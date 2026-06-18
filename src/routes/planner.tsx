@@ -204,7 +204,8 @@ const submit = async (e: React.FormEvent) => {
         </form>
 
         {/* OUTPUT */}
-        <div className="min-h-[400px]">
+        <div className="mb-6 rounded-xl border border-red-300 bg-red-50 p-4 text-sm text-red-800">
+          {error}
           {!plan && !loading && <EmptyState />}
           {loading && (
             <div className="grid h-full place-items-center rounded-2xl border border-dashed border-border bg-secondary/30 p-12 text-center">
