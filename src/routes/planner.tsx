@@ -358,7 +358,7 @@ function EmptyState() {
     <div className="grid h-full place-items-center rounded-2xl border border-dashed border-border bg-secondary/30 p-12 text-center">
       <div className="max-w-sm">
         <Sparkles className="mx-auto h-6 w-6 text-forest" />
-        <p className="mt-4 font-display text-2xl">Your AI itinerary will appear here.</p>
+        <p className="mt-4 font-display text-2xl">TEST VERSION 123</p>
         <p className="mt-2 text-sm text-muted-foreground">
           Fill out the form and the concierge AI will draft a destination-specific plan.
         </p>
