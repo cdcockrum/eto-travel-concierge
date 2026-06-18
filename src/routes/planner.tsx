@@ -76,11 +76,12 @@ function Planner() {
   const toggle = (i: string) =>
     setInterests((arr) => (arr.includes(i) ? arr.filter((x) => x !== i) : [...arr, i]));
 
- const submit = async (e: React.FormEvent) => {
+const submit = async (e: React.FormEvent) => {
   e.preventDefault();
 
   setLoading(true);
   setPlan(null);
+  setError(null);
 
   try {
     const response = await fetch("/api/travel", {
@@ -102,15 +103,17 @@ function Planner() {
       }),
     });
 
+    const text = await response.text();
+
     if (!response.ok) {
-      throw new Error("Failed to generate travel guide");
+      throw new Error(`API error ${response.status}: ${text}`);
     }
 
-    const guide = await response.json();
-
+    const guide = JSON.parse(text);
     setPlan(guide);
   } catch (error) {
     console.error("Travel planning error:", error);
+    setError(error instanceof Error ? error.message : "Something went wrong.");
   } finally {
     setLoading(false);
   }
