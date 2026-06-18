@@ -1,13 +1,35 @@
-import { generateTravelGuide } from "~/lib/api/gemini-travel.functions";
+import { createFileRoute } from "@tanstack/react-router";
+import { generateTravelGuide } from "@/lib/api/gemini-travel.functions";
 
-export async function POST(request: Request) {
-  const body = await request.json();
+export const Route = createFileRoute("/api/travel")({
+  server: {
+    handlers: {
+      POST: async ({ request }) => {
+        try {
+          const body = await request.json();
+          const guide = await generateTravelGuide(body);
 
-  const result = await generateTravelGuide({
-    destination: body.destination,
-    budget: body.budget,
-    interests: body.interests,
-  });
+          return Response.json(guide);
+        } catch (error) {
+          console.error("Travel API error:", error);
 
-  return Response.json(result);
-}
+          return Response.json(
+            {
+              error: "Failed to generate travel guide",
+              details:
+                error instanceof Error ? error.message : "Unknown server error",
+            },
+            { status: 500 }
+          );
+        }
+      },
+
+      GET: async () => {
+        return Response.json({
+          status: "ok",
+          message: "Travel API route is working.",
+        });
+      },
+    },
+  },
+});
