@@ -117,18 +117,15 @@ function WorkWith() {
           </div>
           <div className="space-y-5 text-lg text-foreground/80">
             <p>
-              I spent fifteen years as a travel photographer, six as an in-house advisor at a boutique
-              agency, and the last three building Éto — a one-person practice that pairs custom AI
-              research tools with hand-curated planning.
+              ÉTO Travel Concierge is a personalized travel advisory service designed for travelers who want more
+              than a generic itinerary. We combine thoughtful human planning, destination research, AI-assisted
+              discovery, and curated recommendations to create trips that feel personal, efficient, and deeply
+              considered.
             </p>
             <p>
-              My clients are usually return travelers — people who've done the big-city tour, who want
-              to go deeper, who care about the chef and not just the Michelin star. Many of them are
-              photographers, or married to one.
-            </p>
-            <p>
-              I take a small number of trips each month so I can give each one real attention. If we're
-              a fit, you'll feel it on the first call.
+              Whether you are planning a cultural city escape, a photography-focused journey, a wildlife or 
+              conservation trip, a luxury retreat, or a meaningful family vacation, ÉTO helps shape the experience 
+              around your interests, pace, budget, and travel style.
             </p>
           </div>
         </div>
