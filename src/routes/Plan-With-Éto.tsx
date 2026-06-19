@@ -8,13 +8,13 @@ import hero from "@/assets/hero.jpg";
 export const Route = createFileRoute("/plan-with-eto")({
   head: () => ({
     meta: [
-      { title: "Plan with ÉTO — Éto Travel Concierge" },
+      { title: "Plan With Éto — Éto Travel Concierge" },
       {
         name: "description",
         content:
           "Personalized travel advisory services combining AI-assisted research, human curation, destination expertise, and thoughtful itinerary design.",
       },
-      { property: "og:title", content: "Plan with Éto — Éto Travel Concierge" },
+      { property: "og:title", content: "Plan With Éto — Éto Travel Concierge" },
       {
         property: "og:description",
         content:
