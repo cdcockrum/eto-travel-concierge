@@ -98,8 +98,6 @@ const schema = z.object({
 });
 
 function PlanWithEto() {
-  const contactEmail = "christopher@ccockrum.com";
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
 
@@ -130,9 +128,6 @@ function PlanWithEto() {
   }
 
   setSubmitting(false);
-};
-
-  window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
 };
 
   return (
