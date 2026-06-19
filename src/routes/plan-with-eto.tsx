@@ -1,7 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
 import { z } from "zod";
-import { toast } from "sonner";
 import { Cpu, Camera, Compass, Globe2, Sparkles, Heart } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 
@@ -100,27 +98,34 @@ const schema = z.object({
 });
 
 function PlanWithEto() {
-  const [submitting, setSubmitting] = useState(false);
+  const contactEmail = "christopher@ccockrum.com";
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-    const result = schema.safeParse(data);
+  const formData = new FormData(e.currentTarget);
+  const data = Object.fromEntries(formData);
+  const result = schema.safeParse(data);
 
-    if (!result.success) {
-      toast.error(result.error.issues[0]?.message ?? "Please review the form");
-      return;
-    }
+  if (!result.success) {
+    alert(result.error.issues[0]?.message ?? "Please review the form");
+    return;
+  }
 
-    setSubmitting(true);
+  const { name, email, destination, message } = result.data;
 
-    setTimeout(() => {
-      toast.success("Inquiry received. ÉTO will follow up within one business day.");
-      (e.target as HTMLFormElement).reset();
-      setSubmitting(false);
-    }, 900);
-  };
+  const subject = encodeURIComponent("ÉTO Travel Inquiry");
+  const body = encodeURIComponent(
+    `Name: ${name}
+Email: ${email}
+Destination: ${destination || "Not specified"}
+
+Message:
+${message}`
+  );
+
+  window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
+};
 
   return (
     <>
@@ -249,10 +254,9 @@ function PlanWithEto() {
 
             <button
               type="submit"
-              disabled={submitting}
               className="inline-flex h-11 items-center justify-center rounded-full bg-cream px-6 text-sm font-medium text-ink transition hover:opacity-90 disabled:opacity-70"
             >
-              {submitting ? "Sending…" : "Send inquiry"}
+              Open email
             </button>
           </form>
         </div>
