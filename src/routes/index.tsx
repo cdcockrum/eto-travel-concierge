@@ -10,7 +10,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "AI-powered travel planning combined with expert human guidance to create unforgettable journeys.",
+          "Custom itineraries, destination expertise, and AI-assisted research for creating unforgettable journeys.",
       },
     ],
   }),
@@ -22,47 +22,56 @@ function Index() {
   return (
     <>
       {/* HERO */}
-      <section className="relative -mt-16 h-screen min-h-[680px] w-full overflow-hidden md:-mt-20">
-        <img
-          src={heroImg}
-          alt="Cinematic Icelandic coast"
-          width={1920}
-          height={1080}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70" />
+      {/* HERO */}
+<section className="relative -mt-16 h-screen min-h-[680px] w-full overflow-hidden md:-mt-20">
+  <img
+    src={heroImg}
+    alt="Cinematic Icelandic coast"
+    width={1920}
+    height={1080}
+    className="absolute inset-0 h-full w-full object-cover"
+  />
 
-        <div className="relative z-10 flex h-full items-end pb-20 md:pb-28">
-          <div className="container-editorial">
-            <p className="eyebrow text-white/80">A Boutique Travel Studio</p>
-            <h1 className="mt-5 max-w-4xl text-balance font-display text-[2.6rem] leading-[1.02] text-white md:text-[4.5rem] lg:text-[5.5rem]">
-              Extraordinary Travel,
-              <br />
-              <em className="font-light italic text-white/90">Thoughtfully Curated.</em>
-            </h1>
-            <p className="mt-6 max-w-xl text-base text-white/85 md:text-lg">
-              AI-powered travel planning combined with expert human guidance to create
-              unforgettable journeys.
-            </p>
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link
-                to="/planner"
-                className="group inline-flex items-center gap-2 rounded-full bg-cream px-6 py-3.5 text-sm font-medium text-ink transition hover:bg-white"
-              >
-                Plan My Trip
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-              <Link
-                to="/destinations"
-                className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-md transition hover:bg-white/20"
-              >
-                Explore Destinations
-              </Link>
-            </div>
-          </div>
+  {/* Stronger overlays for readability */}
+  <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/20" />
+  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+
+  <div className="relative z-10 flex h-full items-end pb-20 md:pb-28">
+    <div className="container-editorial">
+      <div className="max-w-4xl rounded-3xl bg-black/25 p-6 backdrop-blur-[2px] md:p-8">
+        <p className="eyebrow text-white/80">A Boutique Travel Studio</p>
+
+        <h1 className="mt-5 max-w-4xl text-balance font-display text-[2.6rem] leading-[1.02] text-white md:text-[4.5rem] lg:text-[5.5rem]">
+          Extraordinary Travel,
+          <br />
+          <em className="font-light italic text-white">Thoughtfully Curated.</em>
+        </h1>
+
+        <p className="mt-6 max-w-xl text-base text-white/90 md:text-lg">
+          AI-powered travel planning combined with expert human guidance to create
+          unforgettable journeys.
+        </p>
+
+        <div className="mt-9 flex flex-wrap gap-3">
+          <Link
+            to="/planner"
+            className="group inline-flex items-center gap-2 rounded-full bg-cream px-6 py-3.5 text-sm font-medium text-ink transition hover:bg-white"
+          >
+            Plan My Trip
+            <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
+
+          <Link
+            to="/destinations"
+            className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-6 py-3.5 text-sm font-medium text-white backdrop-blur-md transition hover:bg-white/20"
+          >
+            Explore Destinations
+          </Link>
         </div>
-      </section>
-
+      </div>
+    </div>
+  </div>
+</section>
       {/* PHILOSOPHY */}
       <section className="container-editorial py-24 md:py-32">
         <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
