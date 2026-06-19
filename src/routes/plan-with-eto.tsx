@@ -100,7 +100,7 @@ const schema = z.object({
 function PlanWithEto() {
   const contactEmail = "christopher@ccockrum.com";
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
 
   const formData = new FormData(e.currentTarget);
@@ -108,21 +108,29 @@ function PlanWithEto() {
   const result = schema.safeParse(data);
 
   if (!result.success) {
-    alert(result.error.issues[0]?.message ?? "Please review the form");
+    toast.error(result.error.issues[0]?.message ?? "Please review the form");
     return;
   }
 
-  const { name, email, destination, message } = result.data;
+  setSubmitting(true);
 
-  const subject = encodeURIComponent("ÉTO Travel Inquiry");
-  const body = encodeURIComponent(
-    `Name: ${name}
-Email: ${email}
-Destination: ${destination || "Not specified"}
+  const response = await fetch("https://formspree.io/f/xgobglkd", {
+    method: "POST",
+    body: formData,
+    headers: {
+      Accept: "application/json",
+    },
+  });
 
-Message:
-${message}`
-  );
+  if (response.ok) {
+    toast.success("Inquiry received. ÉTO will follow up within one business day.");
+    e.currentTarget.reset();
+  } else {
+    toast.error("Unable to send inquiry. Please try again.");
+  }
+
+  setSubmitting(false);
+};
 
   window.location.href = `mailto:${contactEmail}?subject=${subject}&body=${body}`;
 };
