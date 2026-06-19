@@ -19,6 +19,7 @@ export type Destination = {
   name: string;
   country: string;
   region: string;
+  featuredMonths: string[];
   tagline: string;
   image: string;
   bestTime: string;
@@ -47,6 +48,7 @@ export const destinations: Destination[] = [
     name: "Tokyo",
     country: "Japan",
     region: "Asia",
+    featuredMonths: ["March", "April", "October", "November"],
     tagline: "Neon-soaked nights, monastic mornings.",
     image: tokyo,
     bestTime: "Late March–early May (sakura) and October–November (clear, crisp)",
@@ -158,6 +160,7 @@ export const destinations: Destination[] = [
     name: "Kyoto",
     country: "Japan",
     region: "Asia",
+    featuredMonths: ["March", "April", "October", "November"],
     tagline: "A thousand years of stillness.",
     image: kyoto,
     bestTime: "Early April (sakura) and mid-November (momiji); avoid Golden Week and Obon",
@@ -269,6 +272,7 @@ export const destinations: Destination[] = [
     name: "Joshua Tree",
     country: "USA",
     region: "North America",
+    featuredMonths: ["February", "March", "April", "October", "November"],
     tagline: "Desert silence, cosmic skies.",
     image: joshua,
     bestTime: "October–April; avoid July–August (40°C+ daytime)",
@@ -379,6 +383,7 @@ export const destinations: Destination[] = [
     name: "Iceland",
     country: "Iceland",
     region: "Europe",
+    featuredMonths: ["February", "March", "June", "July", "September", "October"],
     tagline: "Fire, ice, and the long blue hour.",
     image: iceland,
     bestTime: "June–August for midnight sun and highlands; late September–March for aurora",
@@ -489,6 +494,7 @@ export const destinations: Destination[] = [
     name: "Paris",
     country: "France",
     region: "Europe",
+    featuredMonths: ["April", "May", "June", "September", "October"],
     tagline: "The city as a slow ritual.",
     image: paris,
     bestTime: "Mid-April–June and September–October; avoid August (closures)",
@@ -600,6 +606,7 @@ export const destinations: Destination[] = [
     name: "London",
     country: "United Kingdom",
     region: "Europe",
+    featuredMonths: ["May", "June", "July", "September", "October"],
     tagline: "A capital of small worlds.",
     image: london,
     bestTime: "May–September; late September is ideal — warm, dry, theatre season",
@@ -711,6 +718,7 @@ export const destinations: Destination[] = [
     name: "New Zealand",
     country: "New Zealand",
     region: "Oceania",
+    featuredMonths: ["December", "January", "February", "March"],
     tagline: "Cinematic wilderness, end of the world.",
     image: nz,
     bestTime: "Dec–March (summer) and June–August (snow); shoulder months are uncrowded",
@@ -822,6 +830,7 @@ export const destinations: Destination[] = [
     name: "Costa Rica",
     country: "Costa Rica",
     region: "Central America",
+    featuredMonths: ["December", "January", "February", "March", "April"],
     tagline: "Pura vida in the cloud forest.",
     image: costa,
     bestTime: "December–April (dry season); May–November greener and quieter",
@@ -932,4 +941,16 @@ export const destinations: Destination[] = [
 
 export function getDestination(slug: string) {
   return destinations.find((d) => d.slug === slug);
+}
+
+export function getCurrentMonth() {
+  return new Date().toLocaleString("en-US", { month: "long" });
+}
+
+export function getFeaturedDestinations(month = getCurrentMonth()) {
+  const featured = destinations.filter((d) =>
+    d.featuredMonths.includes(month)
+  );
+
+  return featured.length > 0 ? featured.slice(0, 3) : destinations.slice(0, 3);
 }
