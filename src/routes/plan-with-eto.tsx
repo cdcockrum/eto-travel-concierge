@@ -124,7 +124,7 @@ function PlanWithEto() {
   });
 
   if (response.ok) {
-    toast.success("Inquiry received. ÉTO will follow up within one business day.");
+    toast.success("Inquiry received. Éto will follow up within one business day.");
     e.currentTarget.reset();
   } else {
     toast.error("Unable to send inquiry. Please try again.");
@@ -233,7 +233,7 @@ function PlanWithEto() {
           <div>
             <p className="eyebrow text-cream/60">Inquire</p>
             <h2 className="mt-3 font-display text-4xl md:text-5xl">
-              Tell ÉTO about your trip.
+              Tell Éto about your trip.
             </h2>
             <p className="mt-5 text-cream/75">
               Share a few details about where you want to go, who is traveling, and what kind of experience you want. ÉTO will follow up to begin shaping the plan.
