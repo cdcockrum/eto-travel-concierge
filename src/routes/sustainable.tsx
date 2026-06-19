@@ -45,7 +45,7 @@ function Sustainable() {
       <section className="container-editorial py-20">
         <p className="max-w-3xl text-lg text-foreground/80">
           Travel is a privilege with consequences. Éto's default settings favor low-impact stays,
-          local guides, and slow, considered transport — because the most beautiful places stay
+          local guides, and slow, considered transport because the most beautiful places stay
           beautiful when we treat them well.
         </p>
 
