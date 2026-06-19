@@ -1,5 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { z } from "zod";
+import { toast } from "sonner";
 import { Cpu, Camera, Compass, Globe2, Sparkles, Heart } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 
@@ -98,6 +100,7 @@ const schema = z.object({
 });
 
 function PlanWithEto() {
+  const [submitting, setSubmitting] = useState(false);
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
 
