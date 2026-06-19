@@ -6,12 +6,12 @@ import { Cpu, Camera, Compass, Globe2, Sparkles, Heart, Quote } from "lucide-rea
 import hero from "@/assets/hero.jpg";
 import { SampleDisclaimer } from "@/components/sample-disclaimer";
 
-export const Route = createFileRoute("/work-with-christopher")({
+export const Route = createFileRoute("/plan-with-eto")({
   head: () => ({
     meta: [
-      { title: "Work With Christopher — Éto Travel Concierge" },
+      { title: "Plan-With-Éto — Éto Travel Concierge" },
       { name: "description", content: "A hybrid travel advisory practice: AI-powered research, human curation, photography-informed travel design." },
-      { property: "og:title", content: "Work With Christopher — Éto Travel" },
+      { property: "og:title", content: "Plan-With-Éto — Éto Travel" },
       { property: "og:description", content: "AI-powered research, human curation, photography-informed travel design." },
       { property: "og:image", content: hero },
     ],
@@ -86,7 +86,7 @@ function WorkWith() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/80" />
         <div className="relative z-10 flex h-full items-end pb-16">
           <div className="container-editorial">
-            <p className="eyebrow text-white/70">Work With Christopher</p>
+            <p className="eyebrow text-white/70">Plan-With-Éto</p>
             <h1 className="mt-4 max-w-3xl font-display text-5xl text-white md:text-7xl">
               A hybrid advisory: AI research, human judgment.
             </h1>
