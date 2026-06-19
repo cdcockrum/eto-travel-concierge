@@ -262,7 +262,7 @@ function PlanWithEto() {
               type="submit"
               className="inline-flex h-11 items-center justify-center rounded-full bg-cream px-6 text-sm font-medium text-ink transition hover:opacity-90 disabled:opacity-70"
             >
-              Open email
+              Submit
             </button>
           </form>
         </div>
