@@ -49,9 +49,9 @@ export function SiteHeader() {
           </span>
           <span
             className={`hidden text-[0.65rem] uppercase tracking-[0.25em] sm:inline ${
-              scrolled || open
-                ? "text-muted-foreground"
-                : "text-white/85 drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]"
+              transparentHeader
+                ? "text-white/90"
+                : "text-muted-foreground"
             }`}
           >
             Travel Concierge
@@ -69,7 +69,9 @@ export function SiteHeader() {
                    : "text-muted-foreground hover:text-foreground"
               }`}
               activeProps={{
-                className: scrolled ? "text-foreground" : "text-white",
+                className: transparentHeader
+                  ? "text-white"
+                  : "text-stone-600 font-semibold",
               }}
             >
               {item.label}
@@ -80,11 +82,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             to="/planner"
-            className={`hidden rounded-full px-4 py-2 text-xs font-medium transition sm:inline-flex ${
-              scrolled
-                ? "bg-primary text-primary-foreground hover:opacity-90"
-                : "border border-white/40 bg-white/15 text-white backdrop-blur-md hover:bg-white/25"
-            }`}
+            className="hidden rounded-full bg-forest-deep px-4 py-2 text-xs font-medium text-white transition hover:opacity-90 sm:inline-flex"
           >
             Plan My Trip
           </Link>
