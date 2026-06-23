@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 
 const NAV = [
   { to: "/planner", label: "AI Planner" },
@@ -17,7 +17,18 @@ const NAV = [
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const transparentHeader = !scrolled && !open;
+  const location = useLocation();
+
+  const solidHeaderPages = [
+    "/planner",
+    "/destinations",
+    "/itinerary",
+  ];
+
+  const transparentHeader =
+    !solidHeaderPages.includes(location.pathname) &&
+    !scrolled &&
+    !open;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
