@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Link, useLocation } from "@tanstack/react-router";
 
 const NAV = [
   { to: "/planner", label: "AI Planner" },
@@ -16,6 +17,9 @@ const NAV = [
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+  const transparentHeader = isHome && !scrolled && !open;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -27,23 +31,22 @@ export function SiteHeader() {
   return (
     <header
       className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled || open
-          ? "border-b border-border bg-background/85 backdrop-blur-xl"
-          : "bg-transparent"
+        transparentHeader
+          ? "bg-transparent"
+          : "border-b border-border bg-background/85 backdrop-blur-xl"
       }`}
     >
       <div className="container-editorial flex h-16 items-center justify-between gap-6 md:h-20">
         <Link to="/" className="flex shrink-0 items-center gap-2">
           <span
             className={`font-display text-2xl tracking-tight md:text-[1.65rem] ${
-              scrolled || open
-                ? "text-foreground"
-                : "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]"
+              transparentHeader
+                ? "text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.75)]"
+                : "text-foreground"
             }`}
           >
             Éto
           </span>
-
           <span
             className={`hidden text-[0.65rem] uppercase tracking-[0.25em] sm:inline ${
               scrolled || open
@@ -61,9 +64,9 @@ export function SiteHeader() {
               key={item.to}
               to={item.to}
               className={`text-[0.82rem] font-medium transition-colors ${
-                scrolled
-                  ? "text-muted-foreground hover:text-foreground"
-                  : "text-white/85 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] hover:text-white"
+                transparentHeader
+                   ? "text-white/85 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] hover:text-white"
+                   : "text-muted-foreground hover:text-foreground"
               }`}
               activeProps={{
                 className: scrolled ? "text-foreground" : "text-white",
