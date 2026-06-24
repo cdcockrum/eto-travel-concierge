@@ -227,6 +227,30 @@ function PlanWithEto() {
           ))}
         </ol>
       </section>
+      <section className="container-editorial py-20">
+        <div className="rounded-3xl border border-border bg-secondary/40 p-10 md:p-14">
+          <p className="eyebrow text-muted-foreground">
+            Founding Traveler Program
+          </p>
+
+          <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            Help shape ÉTO&apos;s next chapter.
+          </h2>
+
+          <p className="mt-5 max-w-3xl text-lg text-foreground/75">
+            During our launch period, a limited number of travelers will receive
+            complimentary itinerary refinement and destination consultation in
+            exchange for feedback on the ÉTO planning experience.
+          </p>
+
+          <a
+            href="#inquire"
+            className="mt-8 inline-flex rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground hover:opacity-90"
+          >
+            Apply for Founding Traveler Access
+          </a>
+        </div>
+      </section>
 
       <section id="inquire" className="border-t border-border bg-forest-deep py-24 text-cream">
         <div className="container-editorial grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
