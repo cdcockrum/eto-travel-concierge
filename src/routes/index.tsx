@@ -216,6 +216,45 @@ function Index() {
           </Link>
         </div>
       </section>
+      
+      {/* ETO DISPATCH */}
+      <section className="container-editorial pb-24 md:pb-32">
+        <div className="rounded-3xl border border-border bg-secondary/40 px-8 py-16 text-center md:px-16">
+          <p className="eyebrow text-muted-foreground">
+            ÉTO Dispatch
+          </p>
+
+          <h2 className="mt-3 font-display text-4xl md:text-5xl">
+            One thoughtful email each month.
+          </h2>
+
+          <p className="mx-auto mt-5 max-w-2xl text-lg text-foreground/75">
+            Seasonal destinations, photography opportunities, wildlife migrations,
+            travel insights, and carefully curated journeys from around the world.
+          </p>
+
+          <form
+            action="https://formspree.io/f/xzdldwyk"
+            method="POST"
+            className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row"
+          >
+            <input
+              type="email"
+              name="email"
+              placeholder="Your email address"
+              required
+              className="h-12 flex-1 rounded-full border border-border bg-background px-5 text-sm"
+            />
+
+            <button
+              type="submit"
+              className="rounded-full bg-forest-deep px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
+            >
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </section>      
     </>
   );
 }
