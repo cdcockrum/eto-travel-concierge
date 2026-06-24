@@ -74,7 +74,7 @@ function Index() {
 </section>
       
 {/* HOW ETO WORKS */}
-<section className="container-editorial py-24 md:py-32">
+<section className="container-editorial pt-24 pb-8 md:pt-32 md:pb-12">
   <div className="max-w-3xl">
     <p className="eyebrow text-muted-foreground">How ÉTO Works</p>
     <h2 className="mt-4 font-display text-4xl leading-tight md:text-6xl">
