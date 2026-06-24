@@ -244,6 +244,25 @@ function PlanWithEto() {
             <Input name="name" label="Your name" placeholder="Jane Doe" />
             <Input name="email" type="email" label="Email" placeholder="jane@email.com" />
             <Input name="destination" label="Destination(s) of interest" placeholder="Japan, Iceland, Costa Rica…" />
+            <Input name="travel_dates" label="Travel Dates" placeholder="October 2026, Flexible" />
+            <Input name="travelers" label="Number of Travelers" placeholder="2 Adults" />
+
+            <div>
+              <label className="mb-2 block text-xs font-medium uppercase tracking-[0.15em] text-cream/70">
+                Estimated Budget
+              </label>
+
+              <select
+                name="budget"
+                className="h-11 w-full rounded-md border border-cream/20 bg-cream/5 px-3 text-sm text-cream focus:border-cream/50 focus:outline-none"
+              >
+                <option value="">Select budget</option>
+                <option value="Under $3,000">Under $3,000</option>
+                <option value="$3,000-$7,500">$3,000–$7,500</option>
+                <option value="$7,500-$15,000">$7,500–$15,000</option>
+                <option value="$15,000+">$15,000+</option>
+              </select>
+            </div>
 
             <div>
               <label className="mb-2 block text-xs font-medium uppercase tracking-[0.15em] text-cream/70">
@@ -253,7 +272,7 @@ function PlanWithEto() {
                 name="message"
                 rows={5}
                 maxLength={2000}
-                placeholder="Dates, travel style, budget, who's coming with you, and what would make this trip meaningful…"
+                placeholder="Tell us about the trip you're envisioning. What experiences are most important to you?"
                 className="w-full rounded-md border border-cream/20 bg-cream/5 px-3 py-2.5 text-sm text-cream placeholder:text-cream/40 focus:border-cream/50 focus:outline-none"
               />
             </div>
