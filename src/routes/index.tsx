@@ -72,6 +72,47 @@ function Index() {
     </div>
   </div>
 </section>
+      
+{/* HOW ETO WORKS */}
+<section className="container-editorial py-24 md:py-32">
+  <div className="max-w-3xl">
+    <p className="eyebrow text-muted-foreground">How ÉTO Works</p>
+    <h2 className="mt-4 font-display text-4xl leading-tight md:text-6xl">
+      From first idea to finished itinerary.
+    </h2>
+    <p className="mt-5 text-lg text-foreground/75">
+      ÉTO turns scattered travel ideas into a clear, personalized journey
+      shaped around your interests, pace, budget, and travel style.
+    </p>
+  </div>
+
+  <div className="mt-14 grid gap-px overflow-hidden rounded-2xl bg-border md:grid-cols-3">
+    {HOW_IT_WORKS.map((step) => (
+      <div key={step.title} className="bg-background p-8">
+        <p className="font-display text-4xl text-sandstone-deep">
+          {step.step}
+        </p>
+        <h3 className="mt-5 font-display text-2xl">
+          {step.title}
+        </h3>
+        <p className="mt-3 text-sm leading-6 text-foreground/75">
+          {step.body}
+        </p>
+      </div>
+    ))}
+  </div>
+
+  <div className="mt-10">
+    <Link
+      to="/plan-with-eto"
+      className="inline-flex items-center gap-2 rounded-full bg-forest-deep px-6 py-3 text-sm font-medium text-white transition hover:opacity-90"
+    >
+      Plan With ÉTO
+      <ArrowUpRight className="h-4 w-4" />
+    </Link>
+  </div>
+</section>
+    
       {/* PHILOSOPHY */}
       <section className="container-editorial py-24 md:py-32">
         <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-20">
@@ -178,6 +219,23 @@ function Index() {
     </>
   );
 }
+const HOW_IT_WORKS = [
+  {
+    step: "01",
+    title: "Tell us about your trip",
+    body: "Share where you want to go, your budget, travel style, interests, and what kind of experience you hope to have.",
+  },
+  {
+    step: "02",
+    title: "We curate the journey",
+    body: "ÉTO combines intelligent research tools with human expertise to recommend destinations, accommodations, experiences, and logistics.",
+  },
+  {
+    step: "03",
+    title: "Travel with confidence",
+    body: "Receive a personalized itinerary complete with practical guidance, curated recommendations, and advisor refinement.",
+  },
+];
 
 const PILLARS = [
   { icon: Sparkles, title: "AI-Augmented", body: "Itineraries drafted by intelligent agents trained on years of travel data." },
