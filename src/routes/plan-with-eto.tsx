@@ -6,6 +6,9 @@ import { Cpu, Camera, Compass, Globe2, Sparkles, Heart } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 
 export const Route = createFileRoute("/plan-with-eto")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    message: typeof search.message === "string" ? search.message : "",
+  }),
   head: () => ({
     meta: [
       { title: "Plan With Éto — Éto Travel Concierge" },
@@ -96,11 +99,15 @@ const schema = z.object({
   name: z.string().trim().min(1).max(80),
   email: z.string().trim().email().max(255),
   destination: z.string().trim().max(200).optional(),
-  message: z.string().trim().min(10).max(2000),
+  travel_dates: z.string().trim().max(120).optional(),
+  travelers: z.string().trim().max(80).optional(),
+  budget: z.string().trim().max(80).optional(),
+  message: z.string().trim().min(10).max(6000),
 });
 
 function PlanWithEto() {
   const [submitting, setSubmitting] = useState(false);
+  const { message } = Route.useSearch();
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
 
@@ -294,8 +301,9 @@ function PlanWithEto() {
               </label>
               <textarea
                 name="message"
-                rows={5}
-                maxLength={2000}
+                defaultValue={message}
+                rows={8}
+                maxLength={6000}
                 placeholder="Tell us about the trip you're envisioning. What experiences are most important to you?"
                 className="w-full rounded-md border border-cream/20 bg-cream/5 px-3 py-2.5 text-sm text-cream placeholder:text-cream/40 focus:border-cream/50 focus:outline-none"
               />
@@ -303,9 +311,10 @@ function PlanWithEto() {
 
             <button
               type="submit"
+              disabled={submitting}
               className="inline-flex h-11 items-center justify-center rounded-full bg-cream px-6 text-sm font-medium text-ink transition hover:opacity-90 disabled:opacity-70"
             >
-              Submit
+              {submitting ? "Submitting..." : "Submit"}
             </button>
           </form>
         </div>
