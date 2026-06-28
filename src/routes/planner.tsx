@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Sparkles,
@@ -366,6 +366,56 @@ function EmptyState() {
     </div>
   );
 }
+function formatPlanForAdvisor(plan: Plan) {
+  const days = plan.itinerary
+    .map(
+      (day) => `
+Day ${day.day}: ${day.title}
+Morning: ${day.morning}
+Afternoon: ${day.afternoon}
+Evening: ${day.evening}
+Lodging: ${day.lodging}
+Dining: ${day.dining}
+Transport: ${day.transport}
+Advisor note: ${day.advisorNote}
+`
+    )
+    .join("\n");
+
+  return `
+AI Planner Draft
+
+Summary:
+${plan.summary}
+
+Why recommended:
+${plan.whyRecommend}
+
+Itinerary:
+${days}
+
+Recommended Hotels:
+${plan.hotels.join("\n")}
+
+Activities:
+${plan.activities.join("\n")}
+
+Restaurants:
+${plan.restaurants.join("\n")}
+
+Transportation:
+${plan.transport.join("\n")}
+`.trim();
+}
+
+function saveItinerary(plan: Plan) {
+  localStorage.setItem("eto_saved_itinerary", JSON.stringify(plan));
+  alert("Itinerary saved in this browser.");
+}
+
+function exportItinerary() {
+  window.print();
+}
 
 function PlanView({ plan }: { plan: Plan }) {
   return (
@@ -438,13 +488,29 @@ function PlanView({ plan }: { plan: Plan }) {
       </div>
 
       <div className="flex flex-wrap gap-3 border-t border-border pt-6">
-        <button className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground">
+        <Link
+          to="/plan-with-eto"
+          search={{
+            message: formatPlanForAdvisor(plan),
+          }}
+          className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition hover:opacity-90"
+        >
           Send to my advisor
-        </button>
-        <button className="rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-muted">
+        </Link>
+      
+        <button
+          type="button"
+          onClick={() => saveItinerary(plan)}
+          className="rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-muted"
+        >
           Save itinerary
         </button>
-        <button className="rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-muted">
+      
+        <button
+          type="button"
+          onClick={exportItinerary}
+          className="rounded-full border border-border px-5 py-2.5 text-sm font-medium hover:bg-muted"
+        >
           Export PDF
         </button>
       </div>
